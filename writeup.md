@@ -45,6 +45,21 @@ img_range_intensity = np.vstack((img_range, img_intensity))
 
 * Try to identify vehicle features that appear stable in most of the inspected examples and describe them
 
+## Create Birds-Eye View from Lidar PCL
+
+### Convert sensor coordinates to bev-map coordinates (ID_S2_EX1)
+
+* Convert coordinates in x,y [m] into x,y [pixel] based on width and height of the bev map
+
+```python
+bev_discret = (configs.lim_x[1] - configs.lim_x[0]) / configs.bev_height
+lidar_pcl_cpy[:, 0] = np.int_(np.floor(lidar_pcl_cpy[:, 0] / bev_discret))
+lidar_pcl_cpy[:, 1] = np.int_(np.floor(lidar_pcl_cpy[:, 1] / bev_discret) + (configs.bev_width + 1) / 2)
+```
+
+* output
+![bev_from_pcl_1](img/bev_from_pcl_1.png)
+
 # Writeup: Track 3D-Objects Over Time
 
 Please use this starter template to answer the following questions:
