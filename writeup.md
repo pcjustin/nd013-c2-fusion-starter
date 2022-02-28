@@ -82,6 +82,32 @@ intensity_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = (np.
 ![bev_from_pcl_2_1](img/bev_from_pcl_2_1.png)
 ![bev_from_pcl_2_2](img/bev_from_pcl_2_2.png)
 
+### Compute height layer of bev-map (ID_S2_EX3)
+
+* Make use of the sorted and pruned point-cloud `lidar_pcl_top` from the previous task
+
+```python
+idx_intensity = np.lexsort((-lidar_pcl_cpy[:, 2], lidar_pcl_cpy[:, 1], lidar_pcl_cpy[:, 0]))
+lidar_pcl_top = lidar_pcl_cpy[idx_intensity]
+```
+
+* Normalize the height in each BEV map pixel by the difference between max. and min. height
+
+```python
+height_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = lidar_pcl_top[:, 2] / float(configs.lim_z[1] - configs.lim_z[0])
+```
+
+* Fill the "height" channel of the BEV map with data from the point-cloud
+
+```python
+img_height = height_map * 256
+img_height = img_height.astype(np.uint8)
+```
+
+* output
+
+![bev_from_pcl_3](img/bev_from_pcl_3.png)
+
 # Writeup: Track 3D-Objects Over Time
 
 Please use this starter template to answer the following questions:
