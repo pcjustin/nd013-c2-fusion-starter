@@ -36,6 +36,15 @@ img_range_intensity = np.vstack((img_range, img_intensity))
 * output
 ![show_range_image](img/show_range_image.png)
 
+### Visualize point-cloud (ID_S1_EX2)
+
+* Visualize the point-cloud using the open3d module
+![show_pcl](img/show_pcl.png)
+
+* Find 10 examples of vehicles with varying degrees of visibility in the point-cloud
+
+* Try to identify vehicle features that appear stable in most of the inspected examples and describe them
+
 # Writeup: Track 3D-Objects Over Time
 
 Please use this starter template to answer the following questions:
