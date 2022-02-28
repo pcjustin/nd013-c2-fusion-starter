@@ -60,6 +60,28 @@ lidar_pcl_cpy[:, 1] = np.int_(np.floor(lidar_pcl_cpy[:, 1] / bev_discret) + (con
 * output
 ![bev_from_pcl_1](img/bev_from_pcl_1.png)
 
+### Compute intensity layer of bev-map (ID_S2_EX2)
+
+* Assign lidar intensity values to the cells of the bird-eye view map
+
+```python
+_, idx_height_unique, counts = np.unique(lidar_pcl_cpy[:, 0:2], axis=0, return_index=True, return_counts=True)
+lidar_pcl_top = lidar_pcl_cpy[idx_height_unique]
+```
+
+* Adjust the intensity in such a way that objects of interest (e.g. vehicles) are clearly visible
+
+```python
+percentile1 = np.percentile(lidar_pcl_top[:, 3], 1)
+percentile99 = np.percentile(lidar_pcl_top[:, 3], 99)
+intensity_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = (np.clip(lidar_pcl_top[:, 3], percentile1, percentile99) - percentile1) / (percentile99 - percentile1)
+```
+
+* output
+
+![bev_from_pcl_2_1](img/bev_from_pcl_2_1.png)
+![bev_from_pcl_2_2](img/bev_from_pcl_2_2.png)
+
 # Writeup: Track 3D-Objects Over Time
 
 Please use this starter template to answer the following questions:
